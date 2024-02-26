@@ -14,8 +14,8 @@ app.get('/', (req, res) => {
   res.send('YaY Your Bot Status Changed✨');
 });
 app.listen(port, () => {
-  console.log(`🔗 Listening to RTX: http://localhost:${port}`);
-  console.log(`🔗 Powered By RTX`);
+  console.log(`🔗 Listening to shaf3ey: http://localhost:${port}`);
+  console.log(`🔗 Powered By shaf3ey`);
 });
 
 const statusMessages = ["Watching Foxi Community","Listening to Shaf3ey","Playing 21redrum"];
