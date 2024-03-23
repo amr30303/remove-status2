@@ -18,8 +18,35 @@ app.listen(port, () => {
   console.log(`🔗 Powered By shaf3ey`);
 });
 
-const statusMessages = ["Watching Foxi Community","Listening to Shaf3ey","Playing 21redrum"];
+/*const statusMessages = ["Watching Foxi Community","Listening to Shaf3ey","Playing 21redrum"];*/
+exports.bot.client.once('ready', () => {
+    console.log(`🙂 ${exports.bot.client.user.tag} is online`);
 
+    let statusIndex = 0;
+
+    setInterval(() => {
+        exports.bot.client.user.setActivity(status[statusIndex]);
+
+        // Increment the status index and reset to 0 if it exceeds the array length
+        statusIndex = (statusIndex + 1) % status.length;
+    }, 3000);
+});
+
+let status = [
+    {
+        name: "shaf3ey is here",
+        type: ActivityType.Streaming,
+        url: "https://www.youtube.com/watch?v=8y4pc-pGeh0"
+    },
+    {
+        name: `${exports.bot.client.guilds.cache.reduce((a, g) => a + g.memberCount, 1)} Users`,
+        type: ActivityType.Watching
+    },
+    {
+        name: "Bot v1.0.0",
+        type: ActivityType.Playing
+    }
+];
 
 let currentIndex = 0;
 const channelId = '';
