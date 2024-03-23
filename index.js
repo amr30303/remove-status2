@@ -1,41 +1,32 @@
+
+
+
 const { Client, GatewayIntentBits, ActivityType, TextChannel } = require('discord.js');
 require('dotenv').config();
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const client = new Client({
   intents: Object.keys(GatewayIntentBits).map((a) => {
     return GatewayIntentBits[a];
   }),
 });
-
 const app = express();
 const port = 3000;
-
 app.get('/', (req, res) => {
   res.send('YaY Your Bot Status Changed✨');
 });
-
 app.listen(port, () => {
-  console.log(`🔗 Listening to shaf3ey: http://localhost:${port}`);
-  console.log(`🔗 Powered By shaf3ey`);
+  console.log(`🔗 Listening to Shaf3ey: http://localhost:${port}`);
+  console.log(`🔗 Powered By Shaf3ey`);
 });
 
-let statusIndex = 0;
 
-const status = [
-  {
-    name: "shaf3ey is here",
-    type: 'STREAMING', // Using string instead of ActivityType
-    url: "https://www.youtube.com/watch?v=8y4pc-pGeh0"
-  },
-  {
-    name: "Watching Foxi Community", // Example status
-    type: 'WATCHING' // Using string instead of ActivityType
-  },
-  {
-    name: "Playing 21redrum", // Example status
-    type: 'PLAYING' // Using string instead of ActivityType
-  }
-];
+const statusMessages = ["<a:DiscordBot:1221089477745840198>Bot v2.0","<:Armada:1220574744579936296>Armada Community","Developed By <a:owner_crown:1220538739185553528> Shaf3ey","Check My Bio <:crvt:1220781735231492116>"];
+
+
+let currentIndex = 0;
+const channelId = '';
 
 async function login() {
   try {
@@ -47,17 +38,29 @@ async function login() {
   }
 }
 
-function updateStatusAndSendMessages() {
-  const currentStatus = status[statusIndex];
 
-  // Set presence using client.user.setPresence
+
+
+function updateStatusAndSendMessages() {
+  const currentStatus = statusMessages[currentIndex];
+  const nextStatus = statusMessages[(currentIndex + 1) % statusMessages.length];
+
   client.user.setPresence({
-    activities: [{ name: currentStatus.name, type: currentStatus.type }],
-    status: 'dnd'
+    activities: [{ name: currentStatus, type: ActivityType.Custom}],
+    status: 'dnd',
   });
 
-  // Increment status index and reset if it exceeds array length
-  statusIndex = (statusIndex + 1) % status.length;
+  
+  const textChannel = client.channels.cache.get(channelId);
+
+  if (textChannel instanceof TextChannel) {
+   
+    textChannel.send(`Bot status is: ${currentStatus}`);
+  } else {
+
+  }
+
+  currentIndex = (currentIndex + 1) % statusMessages.length;
 }
 
 client.once('ready', () => {
@@ -68,7 +71,8 @@ client.once('ready', () => {
 
   setInterval(() => {
     updateStatusAndSendMessages();
-  }, 3000); // Adjusted interval to 3000 milliseconds
+  }, 5000);
 });
 
 login();
+
