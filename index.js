@@ -1,54 +1,41 @@
 const { Client, GatewayIntentBits, ActivityType, TextChannel } = require('discord.js');
 require('dotenv').config();
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
 const client = new Client({
   intents: Object.keys(GatewayIntentBits).map((a) => {
     return GatewayIntentBits[a];
   }),
 });
+
 const app = express();
 const port = 3000;
+
 app.get('/', (req, res) => {
   res.send('YaY Your Bot Status Changed✨');
 });
+
 app.listen(port, () => {
   console.log(`🔗 Listening to shaf3ey: http://localhost:${port}`);
   console.log(`🔗 Powered By shaf3ey`);
 });
 
-/*const statusMessages = ["Watching Foxi Community","Listening to Shaf3ey","Playing 21redrum"];*/
+let statusIndex = 0;
 
-
-    let statusIndex = 0;
-
-    setInterval(() => {
-        exports.bot.client.user.setActivity(status[statusIndex]);
-
-        // Increment the status index and reset to 0 if it exceeds the array length
-        statusIndex = (statusIndex + 1) % status.length;
-    }, 3000);
-});
-
-let status = [
-    {
-        name: "shaf3ey is here",
-        type: ActivityType.Streaming,
-        url: "https://www.youtube.com/watch?v=8y4pc-pGeh0"
-    },
-    {
-        name: `${exports.bot.client.guilds.cache.reduce((a, g) => a + g.memberCount, 1)} Users`,
-        type: ActivityType.Watching
-    },
-    {
-        name: "Bot v1.0.0",
-        type: ActivityType.Playing
-    }
+const status = [
+  {
+    name: "shaf3ey is here",
+    type: 'STREAMING', // Using string instead of ActivityType
+    url: "https://www.youtube.com/watch?v=8y4pc-pGeh0"
+  },
+  {
+    name: "Watching Foxi Community", // Example status
+    type: 'WATCHING' // Using string instead of ActivityType
+  },
+  {
+    name: "Playing 21redrum", // Example status
+    type: 'PLAYING' // Using string instead of ActivityType
+  }
 ];
-
-let currentIndex = 0;
-const channelId = '';
 
 async function login() {
   try {
@@ -61,25 +48,16 @@ async function login() {
 }
 
 function updateStatusAndSendMessages() {
-  const currentStatus = statusMessages[currentIndex];
-  const nextStatus = statusMessages[(currentIndex + 1) % statusMessages.length];
+  const currentStatus = status[statusIndex];
 
+  // Set presence using client.user.setPresence
   client.user.setPresence({
-    activities: [{ name: currentStatus, type: ActivityType.Custom}],
-    status: 'dnd',
+    activities: [{ name: currentStatus.name, type: currentStatus.type }],
+    status: 'dnd'
   });
 
-  
-  const textChannel = client.channels.cache.get(channelId);
-
-  if (textChannel instanceof TextChannel) {
-   
-    textChannel.send(`Bot status is: ${currentStatus}`);
-  } else {
-
-  }
-
-  currentIndex = (currentIndex + 1) % statusMessages.length;
+  // Increment status index and reset if it exceeds array length
+  statusIndex = (statusIndex + 1) % status.length;
 }
 
 client.once('ready', () => {
@@ -90,9 +68,7 @@ client.once('ready', () => {
 
   setInterval(() => {
     updateStatusAndSendMessages();
-  }, 10000);
+  }, 3000); // Adjusted interval to 3000 milliseconds
 });
 
 login();
-
-
