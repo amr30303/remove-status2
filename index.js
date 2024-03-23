@@ -19,8 +19,7 @@ app.listen(port, () => {
 });
 
 /*const statusMessages = ["Watching Foxi Community","Listening to Shaf3ey","Playing 21redrum"];*/
-exports.bot.client.once('ready', () => {
-    console.log(`🙂 ${exports.bot.client.user.tag} is online`);
+
 
     let statusIndex = 0;
 
