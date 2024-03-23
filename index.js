@@ -22,7 +22,7 @@ app.listen(port, () => {
 });
 
 
-const statusMessages = ["<a:DiscordBot:1221089477745840198>Bot v2.0","<:Armada:1220574744579936296>Armada Community","Developed By <a:owner_crown:1220538739185553528> Shaf3ey","Check My Bio <:crvt:1220781735231492116>"];
+const statusMessages = ["🤖Bot v2.0","Armada Community","Developed By 👑 Shaf3ey","Check My Bio 👀"];
 
 
 let currentIndex = 0;
