@@ -22,7 +22,7 @@ app.listen(port, () => {
 });
 
 
-const statusMessages = ["🤖Bot v2.0","Armada Community","Developed By 👑 Shaf3ey","Check My Bio 👀"];
+const statusMessages = ["🤖Bot v2.0","Armada Community","Developed By 👑 Shaf3ey"];
 
 
 let currentIndex = 0;
